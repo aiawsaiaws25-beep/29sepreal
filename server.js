@@ -389,20 +389,35 @@ app.delete('/api/admin/off-plan/:id', async (req, res) => {
   }
 });
 
+// Auto-initialize DB middleware
+let dbInitialized = false;
+app.use(async (req, res, next) => {
+  if (!dbInitialized) {
+    try {
+      await db.initDatabase();
+      dbInitialized = true;
+    } catch (err) {
+      console.warn('DB init warning:', err.message);
+    }
+  }
+  next();
+});
+
 // Fallback to index.html
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'index.html'));
 });
 
-// Start Server
-async function start() {
-  await db.initDatabase();
-  app.listen(PORT, () => {
-    console.log(`\n=============================================================`);
-    console.log(`✨ JAY REAL ESTATE LUXURY PORTAL & CRM RUNNING ON PORT ${PORT}`);
-    console.log(`🌐 Open: http://localhost:${PORT}`);
-    console.log(`=============================================================\n`);
+// Start Server locally if run directly
+if (require.main === module) {
+  db.initDatabase().then(() => {
+    app.listen(PORT, () => {
+      console.log(`\n=============================================================`);
+      console.log(`✨ JAY REAL ESTATE LUXURY PORTAL & CRM RUNNING ON PORT ${PORT}`);
+      console.log(`🌐 Open: http://localhost:${PORT}`);
+      console.log(`=============================================================\n`);
+    });
   });
 }
 
-start();
+module.exports = app;
