@@ -39,6 +39,7 @@ function rateLimiter(req, res, next) {
 }
 
 // Serve static frontend files
+app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname)));
 
 // ================= AUTHENTICATION ROUTES =================
@@ -405,7 +406,12 @@ app.use(async (req, res, next) => {
 
 // Fallback to index.html
 app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'index.html'));
+  const publicIndex = path.join(__dirname, 'public', 'index.html');
+  if (require('fs').existsSync(publicIndex)) {
+    res.sendFile(publicIndex);
+  } else {
+    res.sendFile(path.join(__dirname, 'index.html'));
+  }
 });
 
 // Start Server locally if run directly

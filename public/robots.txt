@@ -1,0 +1,20 @@
+# Robots.txt for Jay Real Estate
+User-agent: *
+Allow: /
+Allow: /#/properties
+Allow: /#/off-plan
+Allow: /#/calculator
+Allow: /#/sell
+Allow: /#/about
+Allow: /#/contact
+
+# Disallow Private CRM & Admin API routes
+Disallow: /api/admin/
+Disallow: /api/auth/
+Disallow: /admin
+Disallow: /#/admin
+Disallow: /#/admin/*
+Disallow: /#admin*
+
+# XML Sitemap
+Sitemap: http://localhost:8080/sitemap.xml
