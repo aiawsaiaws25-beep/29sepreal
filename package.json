@@ -1,0 +1,16 @@
+{
+  "name": "jay-real-estate",
+  "version": "2.0.0",
+  "description": "Luxury Dubai Property Sales Website & Neon Database System",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "seed": "node db/seed.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "pg": "^8.13.1"
+  }
+}
